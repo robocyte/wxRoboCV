@@ -7,6 +7,8 @@
 #include "..\include\MainFrame.h"
 #include "..\include\OpenCVCamera.h"
 
+#include <string>
+
 MainFrame::MainFrame(wxWindow* parent)
     : MainFrame_base(parent)
 {
@@ -29,6 +31,8 @@ void MainFrame::InitializeCamera()
     if (m_camera->Initialize())
     {
         wxLogMessage("Camera successfully initialized");
+        auto resolution_string = std::to_string(m_camera->GetWidth()) + " x " + std::to_string(m_camera->GetHeight());
+        m_statusbar->SetStatusText(wxString(resolution_string), 2);
     }
     else
     {

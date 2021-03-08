@@ -43,7 +43,6 @@ class MainFrame_base : public wxFrame
 			ID_MENU_VIEW_LOG,
 			ID_MENU_CAMERA_SOURCE,
 			ID_MENU_CAMERA_FORMAT,
-			ID_TB_START_CAMERA,
 			ID_TB_PAUSE_RESUME_CAMERA,
 			ID_TB_STOP_CAMERA,
 			ID_SAVE_LOG,
@@ -55,7 +54,6 @@ class MainFrame_base : public wxFrame
 		wxMenu* m_view_menu;
 		wxMenu* m_camera_menu;
 		wxAuiToolBar* m_toolbar_main;
-		wxAuiToolBarItem* m_tb_start_camera;
 		wxAuiToolBarItem* m_tb_pause_camera;
 		wxAuiToolBarItem* m_tb_stop_camera;
 		wxPanel* m_view_camera;

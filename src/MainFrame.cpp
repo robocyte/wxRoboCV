@@ -199,9 +199,6 @@ void MainFrame::OnToolbarCamera(wxCommandEvent& event)
 {
     switch (event.GetId())
     {
-    case ID_TB_START_CAMERA:
-        StartCameraThread();
-        break;
     case ID_TB_PAUSE_RESUME_CAMERA:
         PauseResumeCameraThread();
         break;

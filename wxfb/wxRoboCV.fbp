@@ -226,18 +226,6 @@
                 <property name="window_name"></property>
                 <property name="window_style"></property>
                 <object class="tool" expanded="1">
-                    <property name="bitmap">Load From Icon Resource; play_icon; [-1; -1]</property>
-                    <property name="context_menu">0</property>
-                    <property name="id">ID_TB_START_CAMERA</property>
-                    <property name="kind">wxITEM_NORMAL</property>
-                    <property name="label">Start camera</property>
-                    <property name="name">m_tb_start_camera</property>
-                    <property name="permission">protected</property>
-                    <property name="statusbar">Start camera</property>
-                    <property name="tooltip">Start camera</property>
-                    <event name="OnToolClicked">OnToolbarCamera</event>
-                </object>
-                <object class="tool" expanded="1">
                     <property name="bitmap">Load From Icon Resource; play_pause_icon; [-1; -1]</property>
                     <property name="context_menu">0</property>
                     <property name="id">ID_TB_PAUSE_RESUME_CAMERA</property>

@@ -50,30 +50,28 @@ MainFrame_base::MainFrame_base( wxWindow* parent, wxWindowID id, const wxString&
 	this->SetMenuBar( m_menubar );
 
 	m_toolbar_main = new wxAuiToolBar( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxAUI_TB_HORZ_LAYOUT );
-	m_tb_start_camera = m_toolbar_main->AddTool( ID_TB_START_CAMERA, wxT("Start camera"), wxIcon("play_icon", wxBITMAP_TYPE_ICO_RESOURCE, 22, 22), wxNullBitmap, wxITEM_NORMAL, wxT("Start camera"), wxT("Start camera"), NULL );
+	m_tb_pause_camera = m_toolbar_main->AddTool(ID_TB_PAUSE_RESUME_CAMERA, wxT("Pause/resume camera"), wxIcon("play_pause_icon", wxBITMAP_TYPE_ICO_RESOURCE, 22, 22), wxNullBitmap, wxITEM_NORMAL, wxT("Pause/resume camera"), wxT("Pause/resume camera"), NULL);
 
-	m_tb_pause_camera = m_toolbar_main->AddTool( ID_TB_PAUSE_RESUME_CAMERA, wxT("Pause/resume camera"), wxIcon("play_pause_icon", wxBITMAP_TYPE_ICO_RESOURCE, 22, 22), wxNullBitmap, wxITEM_NORMAL, wxT("Pause/resume camera"), wxT("Pause/resume camera"), NULL );
-
-	m_tb_stop_camera = m_toolbar_main->AddTool( ID_TB_STOP_CAMERA, wxT("Stop camera"), wxIcon("stop_icon", wxBITMAP_TYPE_ICO_RESOURCE, 22, 22), wxNullBitmap, wxITEM_NORMAL, wxT("Stop camera"), wxT("Stop camera"), NULL );
+	m_tb_stop_camera = m_toolbar_main->AddTool(ID_TB_STOP_CAMERA, wxT("Stop camera"), wxIcon("stop_icon", wxBITMAP_TYPE_ICO_RESOURCE, 22, 22), wxNullBitmap, wxITEM_NORMAL, wxT("Stop camera"), wxT("Stop camera"), NULL);
 
 	m_toolbar_main->Realize();
-	m_mgr.AddPane( m_toolbar_main, wxAuiPaneInfo().Top().CaptionVisible( false ).CloseButton( false ).PaneBorder( false ).Movable( false ).Dock().Resizable().FloatingSize( wxDefaultSize ).DockFixed( true ).BottomDockable( false ).TopDockable( false ).LeftDockable( false ).RightDockable( false ).Floatable( false ).Layer( 10 ) );
+	m_mgr.AddPane(m_toolbar_main, wxAuiPaneInfo().Top().CaptionVisible(false).CloseButton(false).PaneBorder(false).Movable(false).Dock().Resizable().FloatingSize(wxDefaultSize).DockFixed(true).BottomDockable(false).TopDockable(false).LeftDockable(false).RightDockable(false).Floatable(false).Layer(10));
 
-	m_view_camera = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE|wxTAB_TRAVERSAL );
-	m_mgr.AddPane( m_view_camera, wxAuiPaneInfo() .Left() .Caption( wxT("Camera view") ).MaximizeButton( true ).PaneBorder( false ).Dock().Resizable().FloatingSize( wxDefaultSize ).CentrePane() );
+	m_view_camera = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE | wxTAB_TRAVERSAL);
+	m_mgr.AddPane(m_view_camera, wxAuiPaneInfo().Left().Caption(wxT("Camera view")).MaximizeButton(true).PaneBorder(false).Dock().Resizable().FloatingSize(wxDefaultSize).CentrePane());
 
-	m_view_log = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE|wxTAB_TRAVERSAL );
-	m_mgr.AddPane( m_view_log, wxAuiPaneInfo() .Name( wxT("Log") ).Bottom() .Caption( wxT("Log") ).MaximizeButton( true ).PaneBorder( false ).Dock().Resizable().FloatingSize( wxDefaultSize ).MinSize( wxSize( 400,100 ) ) );
+	m_view_log = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE | wxTAB_TRAVERSAL);
+	m_mgr.AddPane(m_view_log, wxAuiPaneInfo().Name(wxT("Log")).Bottom().Caption(wxT("Log")).MaximizeButton(true).PaneBorder(false).Dock().Resizable().FloatingSize(wxDefaultSize).MinSize(wxSize(400, 100)));
 
 	wxBoxSizer* bSizer1;
-	bSizer1 = new wxBoxSizer( wxHORIZONTAL );
+	bSizer1 = new wxBoxSizer(wxHORIZONTAL);
 
-	m_toolbar_log = new wxAuiToolBar( m_view_log, wxID_ANY, wxDefaultPosition, wxSize( -1,-1 ), wxAUI_TB_VERTICAL|wxBORDER_NONE );
-	m_toolbar_log->SetToolBitmapSize( wxSize( 22,22 ) );
-	m_toolbar_log->SetToolPacking( 2 );
-	m_tb_save_log = m_toolbar_log->AddTool( ID_SAVE_LOG, wxT("Save log"), wxIcon("save_icon", wxBITMAP_TYPE_ICO_RESOURCE, 22, 22), wxNullBitmap, wxITEM_NORMAL, wxT("Save the log to a .txt file"), wxT("Save the log to a .txt file"), NULL );
+	m_toolbar_log = new wxAuiToolBar(m_view_log, wxID_ANY, wxDefaultPosition, wxSize(-1, -1), wxAUI_TB_VERTICAL | wxBORDER_NONE);
+	m_toolbar_log->SetToolBitmapSize(wxSize(22, 22));
+	m_toolbar_log->SetToolPacking(2);
+	m_tb_save_log = m_toolbar_log->AddTool(ID_SAVE_LOG, wxT("Save log"), wxIcon("save_icon", wxBITMAP_TYPE_ICO_RESOURCE, 22, 22), wxNullBitmap, wxITEM_NORMAL, wxT("Save the log to a .txt file"), wxT("Save the log to a .txt file"), NULL);
 
-	m_tb_clear_log = m_toolbar_log->AddTool( ID_CLEAR_LOG, wxT("Clear log"), wxIcon("clear_log_icon", wxBITMAP_TYPE_ICO_RESOURCE, 22, 22), wxNullBitmap, wxITEM_NORMAL, wxT("Clear the log window"), wxT("Clear the log window"), NULL );
+	m_tb_clear_log = m_toolbar_log->AddTool(ID_CLEAR_LOG, wxT("Clear log"), wxIcon("clear_log_icon", wxBITMAP_TYPE_ICO_RESOURCE, 22, 22), wxNullBitmap, wxITEM_NORMAL, wxT("Clear the log window"), wxT("Clear the log window"), NULL);
 
 	m_toolbar_log->Realize();
 
@@ -110,7 +108,6 @@ MainFrame_base::MainFrame_base( wxWindow* parent, wxWindowID id, const wxString&
 	m_file_menu->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame_base::OnViewWindows ), this, m_menu_about->GetId());
 	m_file_menu->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame_base::OnMenuExit ), this, m_menu_exit->GetId());
 	m_view_menu->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame_base::OnViewWindows ), this, m_menu_view_log->GetId());
-	this->Connect( m_tb_start_camera->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MainFrame_base::OnToolbarCamera ) );
 	this->Connect( m_tb_pause_camera->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MainFrame_base::OnToolbarCamera ) );
 	this->Connect( m_tb_stop_camera->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MainFrame_base::OnToolbarCamera ) );
 	m_view_camera->Connect( wxEVT_PAINT, wxPaintEventHandler( MainFrame_base::OnCameraViewPaint ), NULL, this );
@@ -124,7 +121,6 @@ MainFrame_base::~MainFrame_base()
 	// Disconnect Events
 	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame_base::OnClose ) );
 	this->Disconnect( wxEVT_UPDATE_UI, wxUpdateUIEventHandler( MainFrame_base::OnUpdateUI ) );
-	this->Disconnect( m_tb_start_camera->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MainFrame_base::OnToolbarCamera ) );
 	this->Disconnect( m_tb_pause_camera->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MainFrame_base::OnToolbarCamera ) );
 	this->Disconnect( m_tb_stop_camera->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MainFrame_base::OnToolbarCamera ) );
 	m_view_camera->Disconnect( wxEVT_PAINT, wxPaintEventHandler( MainFrame_base::OnCameraViewPaint ), NULL, this );

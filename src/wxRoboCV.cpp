@@ -14,9 +14,9 @@ bool MyApp::OnInit()
     frame->InitializeCamera();
     //frame->SetIcon(wxICON(aaaamain));
     frame->InitializeGuiStyle();
-    frame->Maximize();
+    //frame->Maximize();
     frame->Show();
-    //frame->StartCameraThread();
+    frame->StartCameraThread();
 
     return true;
 }

@@ -226,7 +226,7 @@
                 <property name="window_name"></property>
                 <property name="window_style"></property>
                 <object class="tool" expanded="1">
-                    <property name="bitmap">Load From Icon Resource; play_pause_icon; [-1; -1]</property>
+                    <property name="bitmap">Load From Icon Resource; play_pause_icon; [22; 22]</property>
                     <property name="context_menu">0</property>
                     <property name="id">ID_TB_PAUSE_RESUME_CAMERA</property>
                     <property name="kind">wxITEM_NORMAL</property>
@@ -238,7 +238,7 @@
                     <event name="OnToolClicked">OnToolbarCamera</event>
                 </object>
                 <object class="tool" expanded="1">
-                    <property name="bitmap">Load From Icon Resource; stop_icon; [-1; -1]</property>
+                    <property name="bitmap">Load From Icon Resource; stop_icon; [22; 22]</property>
                     <property name="context_menu">0</property>
                     <property name="id">ID_TB_STOP_CAMERA</property>
                     <property name="kind">wxITEM_NORMAL</property>
@@ -424,7 +424,7 @@
                             <property name="window_name"></property>
                             <property name="window_style">wxBORDER_NONE</property>
                             <object class="tool" expanded="0">
-                                <property name="bitmap">Load From Icon Resource; save_icon; [-1; -1]</property>
+                                <property name="bitmap">Load From Icon Resource; save_icon; [22; 22]</property>
                                 <property name="context_menu">0</property>
                                 <property name="id">ID_SAVE_LOG</property>
                                 <property name="kind">wxITEM_NORMAL</property>
@@ -436,7 +436,7 @@
                                 <event name="OnToolClicked">OnSaveLog</event>
                             </object>
                             <object class="tool" expanded="0">
-                                <property name="bitmap">Load From Icon Resource; clear_log_icon; [-1; -1]</property>
+                                <property name="bitmap">Load From Icon Resource; clear_log_icon; [22; 22]</property>
                                 <property name="context_menu">0</property>
                                 <property name="id">ID_CLEAR_LOG</property>
                                 <property name="kind">wxITEM_NORMAL</property>

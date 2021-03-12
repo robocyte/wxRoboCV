@@ -24,25 +24,6 @@ void MainFrame::InitializeLog()
     m_tc_log->SetFont(*font);
 }
 
-void MainFrame::InitializeCamera()
-{
-    m_camera = std::make_shared<OpenCVCamera>(this);
-    wxLogMessage("Initializing camera...");
-    if (m_camera->Initialize())
-    {
-        wxLogMessage("Camera successfully initialized");
-        auto resolution_string = std::to_string(m_camera->GetWidth())  + "x"
-                               + std::to_string(m_camera->GetHeight()) + " @"
-                               + std::to_string(m_camera->GetFps())    + "fps";
-        m_statusbar->SetStatusText(wxString(resolution_string), 2);
-    }
-    else
-    {
-        wxLogMessage("Camera not initialized");
-        return;
-    }
-}
-
 void MainFrame::StartCameraThread()
 {
     if (!GetThread())
@@ -66,6 +47,41 @@ void MainFrame::StartCameraThread()
     else
     {
         wxLogMessage("Camera thread already running");
+    }
+}
+
+wxThread::ExitCode MainFrame::Entry()
+{
+    InitializeCamera();
+    while (true)
+    {
+        if (GetThread()->TestDestroy()) break;
+
+        m_camera->GetNextFrame();
+
+        //wxThread::Sleep(5);
+    }
+
+    return wxThread::ExitCode();
+}
+
+void MainFrame::InitializeCamera()
+{
+    m_camera = std::make_shared<OpenCVCamera>(this);
+    wxLogMessage("Initializing camera...");
+    if (m_camera->Initialize())
+    {
+        wxLogMessage("Camera successfully initialized");
+        auto resolution_string = std::to_string(m_camera->GetWidth()) + "x"
+            + std::to_string(m_camera->GetHeight()) + " @"
+            + std::to_string(m_camera->GetFps()) + "fps";
+        m_statusbar->SetStatusText(wxString(resolution_string), 2);
+        wxLogMessage("Resolution: %s", resolution_string);
+    }
+    else
+    {
+        wxLogMessage("Camera not initialized");
+        return;
     }
 }
 
@@ -163,21 +179,6 @@ void MainFrame::OnCameraViewResize(wxSizeEvent& event)
 {
     m_view_camera->Refresh();
     event.Skip();
-}
-
-wxThread::ExitCode MainFrame::Entry()
-{
-    InitializeCamera();
-    while (true)
-    {
-        if (GetThread()->TestDestroy()) break;
-
-        m_camera->GetNextFrame();
-
-        //wxThread::Sleep(5);
-    }
-
-    return wxThread::ExitCode();
 }
 
 void MainFrame::OnClose(wxCloseEvent& event)

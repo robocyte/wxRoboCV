@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="include\OpenCVCamera.cpp" />
     <ClCompile Include="src\MainFrame.cpp" />
+    <ClCompile Include="src\MainFrameInteraction.cpp" />
     <ClCompile Include="src\wxRoboCV.cpp" />
     <ClCompile Include="wxfb\wxRoboCV_GUI_style.cpp" />
     <ClCompile Include="wxfb\wxRoboCV_GUI.cpp" />

@@ -38,24 +38,19 @@ class MainFrame_base : public wxFrame
 	protected:
 		enum
 		{
-			ID_VIEW_ABOUT = 1000,
-			ID_MENU_EXIT,
+			ID_MENU_EXIT = 1000,
 			ID_MENU_VIEW_LOG,
-			ID_MENU_CAMERA_SOURCE,
-			ID_MENU_CAMERA_FORMAT,
+			ID_MENU_VIEW_ABOUT,
 			ID_TB_PAUSE_RESUME_CAMERA,
-			ID_TB_STOP_CAMERA,
-			ID_SAVE_LOG,
-			ID_CLEAR_LOG
+			ID_TB_SAVE_LOG,
+			ID_TB_CLEAR_LOG
 		};
 
 		wxMenuBar* m_menubar;
 		wxMenu* m_file_menu;
 		wxMenu* m_view_menu;
-		wxMenu* m_camera_menu;
 		wxAuiToolBar* m_toolbar_main;
 		wxAuiToolBarItem* m_tb_pause_camera;
-		wxAuiToolBarItem* m_tb_stop_camera;
 		wxPanel* m_view_camera;
 		wxPanel* m_view_log;
 		wxAuiToolBar* m_toolbar_log;
@@ -69,13 +64,10 @@ class MainFrame_base : public wxFrame
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnUpdateUI( wxUpdateUIEvent& event ) { event.Skip(); }
-		virtual void OnViewWindows( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnMenuExit( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnToolbarCamera( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnMenuClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnToolClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCameraViewPaint( wxPaintEvent& event ) { event.Skip(); }
 		virtual void OnCameraViewResize( wxSizeEvent& event ) { event.Skip(); }
-		virtual void OnSaveLog( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnClearLog( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:

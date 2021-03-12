@@ -56,7 +56,7 @@
             <property name="xrc_skip_sizer">1</property>
             <event name="OnClose">OnClose</event>
             <event name="OnUpdateUI">OnUpdateUI</event>
-            <object class="wxMenuBar" expanded="0">
+            <object class="wxMenuBar" expanded="1">
                 <property name="bg"></property>
                 <property name="context_help"></property>
                 <property name="context_menu">1</property>
@@ -78,28 +78,10 @@
                 <property name="window_extra_style"></property>
                 <property name="window_name"></property>
                 <property name="window_style">wxBORDER_NONE</property>
-                <object class="wxMenu" expanded="0">
+                <object class="wxMenu" expanded="1">
                     <property name="label">&amp;File</property>
                     <property name="name">m_file_menu</property>
                     <property name="permission">protected</property>
-                    <object class="wxMenuItem" expanded="0">
-                        <property name="bitmap"></property>
-                        <property name="checked">0</property>
-                        <property name="enabled">1</property>
-                        <property name="help"></property>
-                        <property name="id">ID_VIEW_ABOUT</property>
-                        <property name="kind">wxITEM_NORMAL</property>
-                        <property name="label">About...</property>
-                        <property name="name">m_menu_about</property>
-                        <property name="permission">none</property>
-                        <property name="shortcut"></property>
-                        <property name="unchecked_bitmap"></property>
-                        <event name="OnMenuSelection">OnViewWindows</event>
-                    </object>
-                    <object class="separator" expanded="0">
-                        <property name="name">m_separator1</property>
-                        <property name="permission">none</property>
-                    </object>
                     <object class="wxMenuItem" expanded="0">
                         <property name="bitmap"></property>
                         <property name="checked">0</property>
@@ -112,10 +94,10 @@
                         <property name="permission">none</property>
                         <property name="shortcut">Alt+F4</property>
                         <property name="unchecked_bitmap"></property>
-                        <event name="OnMenuSelection">OnMenuExit</event>
+                        <event name="OnMenuSelection">OnMenuClicked</event>
                     </object>
                 </object>
-                <object class="wxMenu" expanded="0">
+                <object class="wxMenu" expanded="1">
                     <property name="label">&amp;View</property>
                     <property name="name">m_view_menu</property>
                     <property name="permission">protected</property>
@@ -131,38 +113,21 @@
                         <property name="permission">none</property>
                         <property name="shortcut"></property>
                         <property name="unchecked_bitmap"></property>
-                        <event name="OnMenuSelection">OnViewWindows</event>
-                    </object>
-                </object>
-                <object class="wxMenu" expanded="0">
-                    <property name="label">&amp;Camera</property>
-                    <property name="name">m_camera_menu</property>
-                    <property name="permission">protected</property>
-                    <object class="wxMenuItem" expanded="0">
-                        <property name="bitmap"></property>
-                        <property name="checked">0</property>
-                        <property name="enabled">1</property>
-                        <property name="help"></property>
-                        <property name="id">ID_MENU_CAMERA_SOURCE</property>
-                        <property name="kind">wxITEM_NORMAL</property>
-                        <property name="label">Camera source</property>
-                        <property name="name">m_menu_camera_source</property>
-                        <property name="permission">none</property>
-                        <property name="shortcut"></property>
-                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">OnMenuClicked</event>
                     </object>
                     <object class="wxMenuItem" expanded="0">
                         <property name="bitmap"></property>
                         <property name="checked">0</property>
                         <property name="enabled">1</property>
                         <property name="help"></property>
-                        <property name="id">ID_MENU_CAMERA_FORMAT</property>
+                        <property name="id">ID_MENU_VIEW_ABOUT</property>
                         <property name="kind">wxITEM_NORMAL</property>
-                        <property name="label">Camera format</property>
-                        <property name="name">m_menu_camera_format</property>
+                        <property name="label">About...</property>
+                        <property name="name">m_menu_about</property>
                         <property name="permission">none</property>
                         <property name="shortcut"></property>
                         <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">OnMenuClicked</event>
                     </object>
                 </object>
             </object>
@@ -235,19 +200,7 @@
                     <property name="permission">protected</property>
                     <property name="statusbar">Pause/resume camera</property>
                     <property name="tooltip">Pause/resume camera</property>
-                    <event name="OnToolClicked">OnToolbarCamera</event>
-                </object>
-                <object class="tool" expanded="1">
-                    <property name="bitmap">Load From Icon Resource; stop_icon; [22; 22]</property>
-                    <property name="context_menu">0</property>
-                    <property name="id">ID_TB_STOP_CAMERA</property>
-                    <property name="kind">wxITEM_NORMAL</property>
-                    <property name="label">Stop camera</property>
-                    <property name="name">m_tb_stop_camera</property>
-                    <property name="permission">protected</property>
-                    <property name="statusbar">Stop camera</property>
-                    <property name="tooltip">Stop camera</property>
-                    <event name="OnToolClicked">OnToolbarCamera</event>
+                    <event name="OnToolClicked">OnToolClicked</event>
                 </object>
             </object>
             <object class="wxPanel" expanded="0">
@@ -426,26 +379,26 @@
                             <object class="tool" expanded="0">
                                 <property name="bitmap">Load From Icon Resource; save_icon; [22; 22]</property>
                                 <property name="context_menu">0</property>
-                                <property name="id">ID_SAVE_LOG</property>
+                                <property name="id">ID_TB_SAVE_LOG</property>
                                 <property name="kind">wxITEM_NORMAL</property>
                                 <property name="label">Save log</property>
                                 <property name="name">m_tb_save_log</property>
                                 <property name="permission">protected</property>
                                 <property name="statusbar">Save the log to a .txt file</property>
                                 <property name="tooltip">Save the log to a .txt file</property>
-                                <event name="OnToolClicked">OnSaveLog</event>
+                                <event name="OnToolClicked">OnToolClicked</event>
                             </object>
                             <object class="tool" expanded="0">
                                 <property name="bitmap">Load From Icon Resource; clear_log_icon; [22; 22]</property>
                                 <property name="context_menu">0</property>
-                                <property name="id">ID_CLEAR_LOG</property>
+                                <property name="id">ID_TB_CLEAR_LOG</property>
                                 <property name="kind">wxITEM_NORMAL</property>
                                 <property name="label">Clear log</property>
                                 <property name="name">m_tb_clear_log</property>
                                 <property name="permission">protected</property>
                                 <property name="statusbar">Clear the log window</property>
                                 <property name="tooltip">Clear the log window</property>
-                                <event name="OnToolClicked">OnClearLog</event>
+                                <event name="OnToolClicked">OnToolClicked</event>
                             </object>
                         </object>
                     </object>

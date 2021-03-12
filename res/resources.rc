@@ -1,5 +1,5 @@
 // Main application icon
-aaaamain            ICON    "Simulate1.ico"
+aaaamain            ICON    "OpenCV.ico"
 
 // Menu/toolbar icons
 start_icon          ICON    "Start.ico"

@@ -15,6 +15,7 @@ public:
 
 	int GetWidth()  { return m_width; }
 	int GetHeight() { return m_height; }
+	int GetFps();
 
 private:
 	cv::Mat          m_video_img;

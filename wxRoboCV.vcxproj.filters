@@ -38,6 +38,9 @@
     <ClCompile Include="include\OpenCVCamera.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="src\MainFrameInteraction.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="wxfb\wxRoboCV_GUI.h">

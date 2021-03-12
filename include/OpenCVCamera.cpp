@@ -1,5 +1,5 @@
-#include "..\include\OpenCVCamera.h"
-#include "..\include\MainFrame.h"
+#include "../include/OpenCVCamera.h"
+#include "../include/MainFrame.h"
 
 #include <opencv2/imgproc.hpp>
 
@@ -50,4 +50,9 @@ void OpenCVCamera::GetNextFrame()
 
 		m_parent_frame->DrawCameraFrame(m_video_img);
 	}
+}
+
+int OpenCVCamera::GetFps()
+{
+	return static_cast<int>(m_capture.get(cv::CAP_PROP_FPS));
 }

@@ -1,5 +1,5 @@
-#include "..\include\wxRoboCV.h"
-#include "..\include\MainFrame.h"
+#include "../include/wxRoboCV.h"
+#include "../include/MainFrame.h"
 
 IMPLEMENT_APP(MyApp);
 
@@ -11,10 +11,8 @@ bool MyApp::OnInit()
     auto frame = new MainFrame{};
     
     frame->InitializeLog();
-    frame->InitializeCamera();
-    //frame->SetIcon(wxICON(aaaamain));
+    frame->SetIcon(wxICON(aaaamain));
     frame->InitializeGuiStyle();
-    //frame->Maximize();
     frame->Show();
     frame->StartCameraThread();
 

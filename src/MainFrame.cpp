@@ -1,11 +1,10 @@
 #include "wx/log.h"
 #include "wx/dcclient.h"
-#include "wx/stdpaths.h"
 
 #include "opencv2/imgproc.hpp"
 
-#include "..\include\MainFrame.h"
-#include "..\include\OpenCVCamera.h"
+#include "../include/MainFrame.h"
+#include "../include/OpenCVCamera.h"
 
 #include <string>
 
@@ -28,10 +27,13 @@ void MainFrame::InitializeLog()
 void MainFrame::InitializeCamera()
 {
     m_camera = std::make_shared<OpenCVCamera>(this);
+    wxLogMessage("Initializing camera...");
     if (m_camera->Initialize())
     {
         wxLogMessage("Camera successfully initialized");
-        auto resolution_string = std::to_string(m_camera->GetWidth()) + " x " + std::to_string(m_camera->GetHeight());
+        auto resolution_string = std::to_string(m_camera->GetWidth())  + "x"
+                               + std::to_string(m_camera->GetHeight()) + " @"
+                               + std::to_string(m_camera->GetFps())    + "fps";
         m_statusbar->SetStatusText(wxString(resolution_string), 2);
     }
     else
@@ -154,11 +156,6 @@ void MainFrame::OnCameraViewPaint(wxPaintEvent& event)
             dc.DrawRectangle(img_width + width_diff, 0, width_diff, win_height);
         }
     }
-    else if (!m_current_bitmap.IsOk())
-    {
-        m_image_mutex.Unlock();
-        return;
-    }
     m_image_mutex.Unlock();
 }
 
@@ -168,67 +165,19 @@ void MainFrame::OnCameraViewResize(wxSizeEvent& event)
     event.Skip();
 }
 
-void MainFrame::OnSaveLog(wxCommandEvent& event)
-{
-    wxFileName f(wxStandardPaths::Get().GetExecutablePath());
-    wxString appPath(f.GetPath());
-    const auto target = appPath + R"(\Log.txt)";
-    if (m_tc_log->SaveFile(target)) wxLogMessage("Log saved to %s", target);
-}
-
-void MainFrame::OnClearLog(wxCommandEvent& event)
-{
-    m_tc_log->Clear();
-}
-
 wxThread::ExitCode MainFrame::Entry()
 {
+    InitializeCamera();
     while (true)
     {
         if (GetThread()->TestDestroy()) break;
 
         m_camera->GetNextFrame();
 
-        wxThread::Sleep(5);
+        //wxThread::Sleep(5);
     }
 
     return wxThread::ExitCode();
-}
-
-void MainFrame::OnToolbarCamera(wxCommandEvent& event)
-{
-    switch (event.GetId())
-    {
-    case ID_TB_PAUSE_RESUME_CAMERA:
-        PauseResumeCameraThread();
-        break;
-    default: event.Skip();
-    }
-}
-
-void MainFrame::OnViewWindows(wxCommandEvent& event)
-{
-    switch (event.GetId())
-    {
-    //case ID_VIEW_BROWSER:
-    //    m_mgr.GetPane("Scene browser").Show();
-    //    m_mgr.Update();
-    //    break;
-    case ID_MENU_VIEW_LOG:
-        m_mgr.GetPane("Log").Show();
-        m_mgr.Update();
-        break;
-    case ID_VIEW_ABOUT:
-        m_mgr.GetPane("About").Show();
-        m_mgr.Update();
-        break;
-    default: event.Skip();
-    }
-}
-
-void MainFrame::OnMenuExit(wxCommandEvent& event)
-{
-    Close();
 }
 
 void MainFrame::OnClose(wxCloseEvent& event)

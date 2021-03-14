@@ -80,7 +80,7 @@ wxThread::ExitCode MainFrame::Entry()
 void MainFrame::InitializeCamera()
 {
     wxCriticalSectionLocker lock{ m_cs_camera };
-    m_camera = std::make_shared<OpenCVCamera>(this);
+    m_camera = std::make_shared<OpenCVCamera>();
     wxLogMessage("Initializing camera...");
     if (m_camera->Initialize())
     {
@@ -123,23 +123,15 @@ void MainFrame::PauseResumeCameraThread()
     }
 }
 
-void MainFrame::DrawCameraFrame(cv::Mat& pImg)
+void MainFrame::DrawCameraFrame(cv::Mat& image)
 {
-    if (pImg.empty()) return;
-
-    int img_width, img_height;
-
-    {
-        wxCriticalSectionLocker lock{ m_cs_camera };
-        img_width  = m_camera->GetResolution().m_width;
-        img_height = m_camera->GetResolution().m_height;
-    }
+    if (image.empty()) return;
 
     int win_width, win_height, new_width, new_height;
     m_view_camera->GetClientSize(&win_width, &win_height);
 
-    const int new_img_width  = (img_width  * win_height) / img_height;
-    const int new_img_height = (img_height * win_width)  / img_width;
+    const int new_img_width  = (image.cols * win_height) / image.rows;
+    const int new_img_height = (image.rows * win_width)  / image.cols;
     const int width_diff  = (win_width  - new_img_width)  / 2;
     const int height_diff = (win_height - new_img_height) / 2;
 
@@ -155,7 +147,7 @@ void MainFrame::DrawCameraFrame(cv::Mat& pImg)
     }
 
     cv::Mat dstImg;
-    cv::resize(pImg, dstImg, cv::Size(new_width, new_height), 0, 0, cv::INTER_AREA);
+    cv::resize(image, dstImg, cv::Size(new_width, new_height), 0, 0, cv::INTER_AREA);
     cv::rectangle(dstImg, cv::Point(10, 10), cv::Point(new_width - 10, new_height - 10), CV_RGB(0, 255, 0), 1);
 
     wxImage tmpImage(new_width, new_height, dstImg.data, true);

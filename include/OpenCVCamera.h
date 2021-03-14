@@ -2,8 +2,6 @@
 
 #include <opencv2/videoio.hpp>
 
-class MainFrame;
-
 struct Resolution
 {
 	Resolution(int width, int height)
@@ -18,7 +16,7 @@ struct Resolution
 class OpenCVCamera
 {
 public:
-	OpenCVCamera(MainFrame* parent = nullptr);
+	OpenCVCamera();
 	~OpenCVCamera();
 
 	bool Initialize();
@@ -35,7 +33,6 @@ private:
 
 	void CheckSupportedResolutions();
 
-	MainFrame*				m_parent_frame;
 	cv::VideoCapture		m_capture;
 	Resolution				m_current_resolution;
 	std::vector<Resolution> m_supported_resolutions;

@@ -1,11 +1,9 @@
 #include "../include/OpenCVCamera.h"
-#include "../include/MainFrame.h"
 
 #include <opencv2/imgproc.hpp>
 
-OpenCVCamera::OpenCVCamera(MainFrame* parent)
-	: m_parent_frame(parent)
-	, m_current_resolution(0, 0)
+OpenCVCamera::OpenCVCamera()
+	: m_current_resolution(0, 0)
 {
 }
 
@@ -68,11 +66,9 @@ cv::Mat OpenCVCamera::GetNextFrame()
 	m_capture.read(next_frame);
 
 	if (!next_frame.empty())
-	{
 		cv::cvtColor(next_frame, result, cv::COLOR_BGR2RGB);
 
-		return result;
-	}
+	return result;
 }
 
 int OpenCVCamera::GetFps()

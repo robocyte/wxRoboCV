@@ -16,7 +16,7 @@ public:
 	void InitializeCamera();
 	void StartCameraThread();
 	void PauseResumeCameraThread();
-	void DrawCameraFrame(cv::Mat& pImg);
+	void DrawCameraFrame(cv::Mat& image);
 
 protected:
 	void OnClose(wxCloseEvent& event);

@@ -80,14 +80,14 @@ void MainFrame::InitializeCamera()
         m_statusbar->SetStatusText(wxString(resolution_string), 2);
         wxLogMessage("Resolution: %s", resolution_string);
         
-        wxLogMessage("Supported resolutions:");
-        auto resolutions = m_camera->GetSupportedResolutions();
-        for (const auto res : resolutions)
-        {
-            wxLogMessage("%ix%i", res.m_width, res.m_height);
-            m_tb_choice_resolution->Append(std::to_string(res.m_width) + "x" + std::to_string(res.m_height));
-        }
-        m_tb_choice_resolution->SetSelection(0);
+        //wxLogMessage("Supported resolutions:");
+        //auto resolutions = m_camera->GetSupportedResolutions();
+        //for (const auto res : resolutions)
+        //{
+        //    wxLogMessage("%ix%i", res.m_width, res.m_height);
+        //    m_tb_choice_resolution->Append(std::to_string(res.m_width) + "x" + std::to_string(res.m_height));
+        //}
+        //m_tb_choice_resolution->SetSelection(0);
     }
     else
     {

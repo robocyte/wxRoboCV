@@ -19,7 +19,7 @@ bool OpenCVCamera::Initialize()
 {
 	m_capture.open(0);
 
-	CheckSupportedResolutions();
+	//CheckSupportedResolutions();
 	m_capture.set(cv::CAP_PROP_FRAME_WIDTH, 1920);
 	m_capture.set(cv::CAP_PROP_FRAME_HEIGHT, 1280);
 	if (!m_capture.isOpened()) return false;

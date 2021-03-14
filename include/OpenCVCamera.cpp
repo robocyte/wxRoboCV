@@ -12,7 +12,6 @@ OpenCVCamera::OpenCVCamera(MainFrame* parent)
 OpenCVCamera::~OpenCVCamera()
 {
 	m_capture.release();
-	if (!m_video_img.empty()) m_video_img.release();
 }
 
 bool OpenCVCamera::Initialize()
@@ -63,22 +62,16 @@ void OpenCVCamera::CheckSupportedResolutions()
 	}
 }
 
-void OpenCVCamera::GetNextFrame()
+cv::Mat OpenCVCamera::GetNextFrame()
 {
-	cv::Mat next_frame;
+	cv::Mat next_frame, result;
 	m_capture.read(next_frame);
 
 	if (!next_frame.empty())
 	{
-		if (!m_video_img.empty())
-		{
-			m_video_img.release();
-			m_video_img = cv::Mat(cv::Size(m_current_resolution.m_width, m_current_resolution.m_height), 8, 3);
-		}
+		cv::cvtColor(next_frame, result, cv::COLOR_BGR2RGB);
 
-		cv::cvtColor(next_frame, m_video_img, cv::COLOR_BGR2RGB);
-
-		m_parent_frame->DrawCameraFrame(m_video_img);
+		return result;
 	}
 }
 

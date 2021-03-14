@@ -57,8 +57,19 @@ wxThread::ExitCode MainFrame::Entry()
     {
         if (GetThread()->TestDestroy()) break;
 
-        wxCriticalSectionLocker lock{ m_cs_camera };
-        m_camera->GetNextFrame();
+        cv::Mat new_frame;
+
+        // GRAB...
+        {
+            wxCriticalSectionLocker lock{ m_cs_camera };
+            new_frame = m_camera->GetNextFrame();
+        }
+
+        // ...PROCESS...
+
+
+        // ...AND DRAW FRAME
+        DrawCameraFrame(new_frame);
 
         //wxThread::Sleep(5);
     }
@@ -117,8 +128,9 @@ void MainFrame::DrawCameraFrame(cv::Mat& pImg)
     if (pImg.empty()) return;
 
     int img_width, img_height;
-    wxCriticalSectionLocker lock{ m_cs_camera };
+
     {
+        wxCriticalSectionLocker lock{ m_cs_camera };
         img_width  = m_camera->GetResolution().m_width;
         img_height = m_camera->GetResolution().m_height;
     }

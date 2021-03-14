@@ -22,7 +22,7 @@ public:
 	~OpenCVCamera();
 
 	bool Initialize();
-	void GetNextFrame();
+	cv::Mat GetNextFrame();
 
 	const Resolution				GetResolution()				{ return m_current_resolution; }
 	const std::vector<Resolution>&  GetSupportedResolutions()	{ return m_supported_resolutions; }
@@ -36,7 +36,6 @@ private:
 	void CheckSupportedResolutions();
 
 	MainFrame*				m_parent_frame;
-	cv::Mat					m_video_img;
 	cv::VideoCapture		m_capture;
 	Resolution				m_current_resolution;
 	std::vector<Resolution> m_supported_resolutions;

@@ -147,26 +147,26 @@ void MainFrame::OnCameraViewPaint(wxPaintEvent& event)
         
         if (height_diff >= 0)
         {
-            cv::Mat dstImg;
-            cv::resize(m_current_frame, dstImg, cv::Size(win_width, new_img_height), 0, 0, cv::INTER_AREA);
-            cv::rectangle(dstImg, cv::Point(10, 10), cv::Point(win_width - 10, new_img_height - 10), CV_RGB(0, 255, 0), 1);
+            cv::Mat dst_img;
+            cv::resize(m_current_frame, dst_img, cv::Size(win_width, new_img_height), 0, 0, cv::INTER_AREA);
+            cv::rectangle(dst_img, cv::Point(10, 10), cv::Point(win_width - 10, new_img_height - 10), CV_RGB(0, 255, 0), 1);
 
-            wxImage tmpImage(win_width, new_img_height, dstImg.data, true);
+            wxImage tmp_img(win_width, new_img_height, dst_img.data, true);
             
             dc.DrawRectangle(0, 0, win_width, height_diff);
-            dc.DrawBitmap(wxBitmap{ tmpImage }, 0, height_diff);
+            dc.DrawBitmap(wxBitmap{ tmp_img }, 0, height_diff);
             dc.DrawRectangle(0, m_current_frame.rows + height_diff, win_width, height_diff);
         }
         else
         {
-            cv::Mat dstImg;
-            cv::resize(m_current_frame, dstImg, cv::Size(new_img_width, win_height), 0, 0, cv::INTER_AREA);
-            cv::rectangle(dstImg, cv::Point(10, 10), cv::Point(new_img_width - 10, win_height - 10), CV_RGB(0, 255, 0), 1);
+            cv::Mat dst_img;
+            cv::resize(m_current_frame, dst_img, cv::Size(new_img_width, win_height), 0, 0, cv::INTER_AREA);
+            cv::rectangle(dst_img, cv::Point(10, 10), cv::Point(new_img_width - 10, win_height - 10), CV_RGB(0, 255, 0), 1);
 
-            wxImage tmpImage(new_img_width, win_height, dstImg.data, true);
+            wxImage tmp_img(new_img_width, win_height, dst_img.data, true);
 
             dc.DrawRectangle(0, 0, width_diff, win_height);
-            dc.DrawBitmap(wxBitmap{ tmpImage }, width_diff, 0);
+            dc.DrawBitmap(wxBitmap{ tmp_img }, width_diff, 0);
             dc.DrawRectangle(m_current_frame.cols + width_diff, 0, width_diff, win_height);
         }
     }

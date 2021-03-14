@@ -1,33 +1,22 @@
 // Main application icon
-aaaamain            ICON    "OpenCV.ico"
+aaaamain            ICON    "opencv.ico"
 
 // Menu/toolbar icons
-start_icon          ICON    "Start.ico"
-image_browser_icon  ICON    "Image browser.ico"
-image_preview_icon  ICON    "Image preview.ico"
-options_icon        ICON    "Options.ico"
-log_icon            ICON    "Log.ico"
-home_icon           ICON    "Home.ico"
-turntable_icon      ICON    "Turntable.ico"
-trackball_icon      ICON    "Trackball.ico"
-grid_icon           ICON    "Grid.ico"
-points_icon         ICON    "Points.ico"
-camera_icon         ICON    "Camera.ico"
-stop_icon			ICON	"Stop.ico"
-play_pause_icon		ICON	"PlayPause.ico"
-pause_icon			ICON	"Pause.ico"
+image_browser_icon  ICON    "image.ico"
+image_preview_icon  ICON    "image_search.ico"
+properties_icon     ICON    "properties.ico"
+log_icon            ICON    "log.ico"
+camera_icon         ICON    "camera.ico"
 
 // Button icons
-save_icon           ICON    "Save.ico"
-delete_icon         ICON    "Delete.ico"
-clear_log_icon      ICON    "Clear log.ico"
-reset_icon          ICON    "Reset.ico"
-floppy_icon         ICON    "Floppy.ico"
+save_icon           ICON    "save.ico"
+clear_log_icon      ICON    "log_clear.ico"
+play_pause_icon		ICON	"play_pause.ico"
 
 // Cursors
-rotate_cursor       CURSOR  "Rotate.cur"
-pan_cursor          CURSOR  "Pan.cur"
-zoom_cursor         CURSOR  "Zoom.cur"
+rotate_cursor       CURSOR  "cursor_rotate.cur"
+pan_cursor          CURSOR  "cursor_pan.cur"
+zoom_cursor         CURSOR  "cursor_zoom.cur"
 
 // Enable visual styles
 #define wxUSE_NO_MANIFEST 0

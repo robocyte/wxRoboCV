@@ -29,6 +29,18 @@ void MainFrame::OnToolClicked(wxCommandEvent& event)
         break;
     }
 
+    case ID_TB_SCREENSHOT:
+    {
+        cv::Mat output;
+
+        {
+            wxCriticalSectionLocker lock{ m_cs_current_frame };
+            cv::cvtColor(m_current_frame, output, cv::COLOR_BGR2RGB);
+        }
+
+        cv::imwrite("screenshot.png", output);
+    }
+
     default: event.Skip();
     }
 }

@@ -12,6 +12,7 @@ camera_icon         ICON    "camera.ico"
 save_icon           ICON    "save.ico"
 clear_log_icon      ICON    "log_clear.ico"
 play_pause_icon		ICON	"play_pause.ico"
+screenshot_icon		ICON	"screenshot.ico"
 
 // Cursors
 rotate_cursor       CURSOR  "cursor_rotate.cur"

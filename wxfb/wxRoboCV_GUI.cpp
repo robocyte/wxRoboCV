@@ -39,6 +39,8 @@ MainFrame_base::MainFrame_base( wxWindow* parent, wxWindowID id, const wxString&
 	m_toolbar_main = new wxAuiToolBar( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxAUI_TB_HORZ_LAYOUT );
 	m_tb_pause_camera = m_toolbar_main->AddTool( ID_TB_PAUSE_RESUME_CAMERA, wxT("Pause/resume camera"), wxIcon( wxT("play_pause_icon"), wxBITMAP_TYPE_ICO_RESOURCE, 22, 22 ), wxNullBitmap, wxITEM_NORMAL, wxT("Pause/resume camera"), wxT("Pause/resume camera"), NULL );
 
+	m_tb_screenshot = m_toolbar_main->AddTool( ID_TB_SCREENSHOT, wxT("Take screenshot"), wxIcon( wxT("screenshot_icon"), wxBITMAP_TYPE_ICO_RESOURCE, 22, 22 ), wxNullBitmap, wxITEM_NORMAL, wxT("Take screenshot"), wxT("Take screenshot"), NULL );
+
 	wxArrayString m_tb_choice_resolutionChoices;
 	m_tb_choice_resolution = new wxChoice( m_toolbar_main, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_tb_choice_resolutionChoices, 0|wxBORDER_NONE );
 	m_tb_choice_resolution->SetSelection( 0 );
@@ -76,13 +78,16 @@ MainFrame_base::MainFrame_base( wxWindow* parent, wxWindowID id, const wxString&
 	m_view_log->Layout();
 	bSizer1->Fit( m_view_log );
 	m_view_about = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE|wxTAB_TRAVERSAL );
-	m_mgr.AddPane( m_view_about, wxAuiPaneInfo() .Name( wxT("About") ).Left() .Caption( wxT("About wxRoboCV") ).Hide().Float().FloatingPosition( wxPoint( 649,436 ) ).Resizable().FloatingSize( wxSize( 316,339 ) ).BottomDockable( false ).TopDockable( false ).LeftDockable( false ).RightDockable( false ).Floatable( false ).MinSize( wxSize( 300,300 ) ) );
+	m_mgr.AddPane( m_view_about, wxAuiPaneInfo() .Name( wxT("About") ).Left() .Caption( wxT("About wxRoboCV") ).Hide().Float().FloatingPosition( wxPoint( 2324,332 ) ).Resizable().FloatingSize( wxSize( 316,339 ) ).BottomDockable( false ).TopDockable( false ).LeftDockable( false ).RightDockable( false ).Floatable( false ).MinSize( wxSize( 300,300 ) ) );
 
 	wxBoxSizer* bSizer2;
 	bSizer2 = new wxBoxSizer( wxVERTICAL );
 
 	m_tc_about = new wxTextCtrl( m_view_about, wxID_ANY, wxT("This is awesome!\n"), wxDefaultPosition, wxDefaultSize, wxTE_CENTER|wxTE_MULTILINE|wxTE_NO_VSCROLL|wxTE_READONLY|wxBORDER_NONE );
 	bSizer2->Add( m_tc_about, 1, wxEXPAND, 5 );
+
+	m_hl_github_repo = new wxHyperlinkCtrl( m_view_about, wxID_ANY, wxT("wxRoboCV GitHub repository"), wxT("https://github.com/robocyte/wxRoboCV"), wxDefaultPosition, wxDefaultSize, wxHL_ALIGN_LEFT );
+	bSizer2->Add( m_hl_github_repo, 0, wxALL, 5 );
 
 
 	m_view_about->SetSizer( bSizer2 );
@@ -100,6 +105,7 @@ MainFrame_base::MainFrame_base( wxWindow* parent, wxWindowID id, const wxString&
 	m_view_menu->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame_base::OnMenuClicked ), this, m_menu_view_log->GetId());
 	m_view_menu->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame_base::OnMenuClicked ), this, m_menu_about->GetId());
 	this->Connect( m_tb_pause_camera->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MainFrame_base::OnToolClicked ) );
+	this->Connect( m_tb_screenshot->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MainFrame_base::OnToolClicked ) );
 	m_tb_choice_resolution->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MainFrame_base::OnChangeResolution ), NULL, this );
 	m_view_camera->Connect( wxEVT_PAINT, wxPaintEventHandler( MainFrame_base::OnCameraViewPaint ), NULL, this );
 	m_view_camera->Connect( wxEVT_SIZE, wxSizeEventHandler( MainFrame_base::OnCameraViewResize ), NULL, this );
@@ -113,6 +119,7 @@ MainFrame_base::~MainFrame_base()
 	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame_base::OnClose ) );
 	this->Disconnect( wxEVT_UPDATE_UI, wxUpdateUIEventHandler( MainFrame_base::OnUpdateUI ) );
 	this->Disconnect( m_tb_pause_camera->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MainFrame_base::OnToolClicked ) );
+	this->Disconnect( m_tb_screenshot->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MainFrame_base::OnToolClicked ) );
 	m_tb_choice_resolution->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MainFrame_base::OnChangeResolution ), NULL, this );
 	m_view_camera->Disconnect( wxEVT_PAINT, wxPaintEventHandler( MainFrame_base::OnCameraViewPaint ), NULL, this );
 	m_view_camera->Disconnect( wxEVT_SIZE, wxSizeEventHandler( MainFrame_base::OnCameraViewResize ), NULL, this );

@@ -24,6 +24,7 @@
 #include <wx/panel.h>
 #include <wx/textctrl.h>
 #include <wx/sizer.h>
+#include <wx/hyperlink.h>
 #include <wx/statusbr.h>
 #include <wx/frame.h>
 
@@ -43,6 +44,7 @@ class MainFrame_base : public wxFrame
 			ID_MENU_VIEW_LOG,
 			ID_MENU_VIEW_ABOUT,
 			ID_TB_PAUSE_RESUME_CAMERA,
+			ID_TB_SCREENSHOT,
 			ID_TB_SAVE_LOG,
 			ID_TB_CLEAR_LOG
 		};
@@ -52,6 +54,7 @@ class MainFrame_base : public wxFrame
 		wxMenu* m_view_menu;
 		wxAuiToolBar* m_toolbar_main;
 		wxAuiToolBarItem* m_tb_pause_camera;
+		wxAuiToolBarItem* m_tb_screenshot;
 		wxChoice* m_tb_choice_resolution;
 		wxPanel* m_view_camera;
 		wxPanel* m_view_log;
@@ -61,6 +64,7 @@ class MainFrame_base : public wxFrame
 		wxTextCtrl* m_tc_log;
 		wxPanel* m_view_about;
 		wxTextCtrl* m_tc_about;
+		wxHyperlinkCtrl* m_hl_github_repo;
 		wxStatusBar* m_statusbar;
 
 		// Virtual event handlers, overide them in your derived class

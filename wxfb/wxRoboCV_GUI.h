@@ -18,6 +18,7 @@
 #include <wx/font.h>
 #include <wx/colour.h>
 #include <wx/settings.h>
+#include <wx/choice.h>
 #include <wx/aui/aui.h>
 #include <wx/aui/auibar.h>
 #include <wx/panel.h>
@@ -51,6 +52,7 @@ class MainFrame_base : public wxFrame
 		wxMenu* m_view_menu;
 		wxAuiToolBar* m_toolbar_main;
 		wxAuiToolBarItem* m_tb_pause_camera;
+		wxChoice* m_tb_choice_resolution;
 		wxPanel* m_view_camera;
 		wxPanel* m_view_log;
 		wxAuiToolBar* m_toolbar_log;
@@ -66,6 +68,7 @@ class MainFrame_base : public wxFrame
 		virtual void OnUpdateUI( wxUpdateUIEvent& event ) { event.Skip(); }
 		virtual void OnMenuClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnToolClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnChangeResolution( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCameraViewPaint( wxPaintEvent& event ) { event.Skip(); }
 		virtual void OnCameraViewResize( wxSizeEvent& event ) { event.Skip(); }
 

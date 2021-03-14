@@ -22,6 +22,7 @@ protected:
 	void OnClose(wxCloseEvent& event);
 	void OnMenuClicked(wxCommandEvent& event);
 	void OnToolClicked(wxCommandEvent& event);
+	void OnChangeResolution(wxCommandEvent& event);
 	void OnCameraViewPaint(wxPaintEvent& event);
 	void OnCameraViewResize(wxSizeEvent& event);
 
@@ -31,4 +32,5 @@ private:
 	std::shared_ptr<OpenCVCamera> m_camera;
 	wxImage						  m_image;
 	wxMutex						  m_image_mutex;
+	wxCriticalSection			  m_cs_camera;
 };

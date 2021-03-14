@@ -39,13 +39,17 @@ MainFrame_base::MainFrame_base( wxWindow* parent, wxWindowID id, const wxString&
 	m_toolbar_main = new wxAuiToolBar( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxAUI_TB_HORZ_LAYOUT );
 	m_tb_pause_camera = m_toolbar_main->AddTool( ID_TB_PAUSE_RESUME_CAMERA, wxT("Pause/resume camera"), wxIcon( wxT("play_pause_icon"), wxBITMAP_TYPE_ICO_RESOURCE, 22, 22 ), wxNullBitmap, wxITEM_NORMAL, wxT("Pause/resume camera"), wxT("Pause/resume camera"), NULL );
 
+	wxArrayString m_tb_choice_resolutionChoices;
+	m_tb_choice_resolution = new wxChoice( m_toolbar_main, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_tb_choice_resolutionChoices, 0|wxBORDER_NONE );
+	m_tb_choice_resolution->SetSelection( 0 );
+	m_toolbar_main->AddControl( m_tb_choice_resolution );
 	m_toolbar_main->Realize();
 	m_mgr.AddPane( m_toolbar_main, wxAuiPaneInfo().Top().CaptionVisible( false ).CloseButton( false ).PaneBorder( false ).Movable( false ).Dock().Resizable().FloatingSize( wxDefaultSize ).DockFixed( true ).BottomDockable( false ).TopDockable( false ).LeftDockable( false ).RightDockable( false ).Floatable( false ).Layer( 10 ) );
 
 	m_view_camera = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE|wxTAB_TRAVERSAL );
 	m_view_camera->SetBackgroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_GRAYTEXT ) );
 
-	m_mgr.AddPane( m_view_camera, wxAuiPaneInfo() .Left() .Caption( wxT("Camera view") ).MaximizeButton( true ).PaneBorder( false ).Dock().Resizable().FloatingSize( wxDefaultSize ).CentrePane() );
+	m_mgr.AddPane( m_view_camera, wxAuiPaneInfo() .Left() .Caption( wxT("Camera view") ).CloseButton( false ).MaximizeButton( true ).PaneBorder( false ).Dock().Resizable().FloatingSize( wxDefaultSize ).CentrePane() );
 
 	m_view_log = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE|wxTAB_TRAVERSAL );
 	m_mgr.AddPane( m_view_log, wxAuiPaneInfo() .Name( wxT("Log") ).Bottom() .Caption( wxT("Log") ).MaximizeButton( true ).PaneBorder( false ).Dock().Resizable().FloatingSize( wxDefaultSize ).MinSize( wxSize( 400,100 ) ) );
@@ -72,7 +76,7 @@ MainFrame_base::MainFrame_base( wxWindow* parent, wxWindowID id, const wxString&
 	m_view_log->Layout();
 	bSizer1->Fit( m_view_log );
 	m_view_about = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE|wxTAB_TRAVERSAL );
-	m_mgr.AddPane( m_view_about, wxAuiPaneInfo() .Name( wxT("About") ).Left() .Caption( wxT("About wxOpenCV") ).Hide().Float().FloatingPosition( wxPoint( 649,436 ) ).Resizable().FloatingSize( wxSize( 316,339 ) ).BottomDockable( false ).TopDockable( false ).LeftDockable( false ).RightDockable( false ).Floatable( false ).MinSize( wxSize( 300,300 ) ) );
+	m_mgr.AddPane( m_view_about, wxAuiPaneInfo() .Name( wxT("About") ).Left() .Caption( wxT("About wxRoboCV") ).Hide().Float().FloatingPosition( wxPoint( 649,436 ) ).Resizable().FloatingSize( wxSize( 316,339 ) ).BottomDockable( false ).TopDockable( false ).LeftDockable( false ).RightDockable( false ).Floatable( false ).MinSize( wxSize( 300,300 ) ) );
 
 	wxBoxSizer* bSizer2;
 	bSizer2 = new wxBoxSizer( wxVERTICAL );
@@ -96,6 +100,7 @@ MainFrame_base::MainFrame_base( wxWindow* parent, wxWindowID id, const wxString&
 	m_view_menu->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame_base::OnMenuClicked ), this, m_menu_view_log->GetId());
 	m_view_menu->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame_base::OnMenuClicked ), this, m_menu_about->GetId());
 	this->Connect( m_tb_pause_camera->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MainFrame_base::OnToolClicked ) );
+	m_tb_choice_resolution->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MainFrame_base::OnChangeResolution ), NULL, this );
 	m_view_camera->Connect( wxEVT_PAINT, wxPaintEventHandler( MainFrame_base::OnCameraViewPaint ), NULL, this );
 	m_view_camera->Connect( wxEVT_SIZE, wxSizeEventHandler( MainFrame_base::OnCameraViewResize ), NULL, this );
 	this->Connect( m_tb_save_log->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MainFrame_base::OnToolClicked ) );
@@ -108,6 +113,7 @@ MainFrame_base::~MainFrame_base()
 	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame_base::OnClose ) );
 	this->Disconnect( wxEVT_UPDATE_UI, wxUpdateUIEventHandler( MainFrame_base::OnUpdateUI ) );
 	this->Disconnect( m_tb_pause_camera->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MainFrame_base::OnToolClicked ) );
+	m_tb_choice_resolution->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MainFrame_base::OnChangeResolution ), NULL, this );
 	m_view_camera->Disconnect( wxEVT_PAINT, wxPaintEventHandler( MainFrame_base::OnCameraViewPaint ), NULL, this );
 	m_view_camera->Disconnect( wxEVT_SIZE, wxSizeEventHandler( MainFrame_base::OnCameraViewResize ), NULL, this );
 	this->Disconnect( m_tb_save_log->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MainFrame_base::OnToolClicked ) );

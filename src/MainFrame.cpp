@@ -57,6 +57,7 @@ wxThread::ExitCode MainFrame::Entry()
     {
         if (GetThread()->TestDestroy()) break;
 
+        wxCriticalSectionLocker lock{ m_cs_camera };
         m_camera->GetNextFrame();
 
         //wxThread::Sleep(5);
@@ -67,16 +68,26 @@ wxThread::ExitCode MainFrame::Entry()
 
 void MainFrame::InitializeCamera()
 {
+    wxCriticalSectionLocker lock{ m_cs_camera };
     m_camera = std::make_shared<OpenCVCamera>(this);
     wxLogMessage("Initializing camera...");
     if (m_camera->Initialize())
     {
         wxLogMessage("Camera successfully initialized");
-        auto resolution_string = std::to_string(m_camera->GetWidth()) + "x"
-            + std::to_string(m_camera->GetHeight()) + " @"
-            + std::to_string(m_camera->GetFps()) + "fps";
+        auto resolution_string = std::to_string(m_camera->GetResolution().m_width)  + "x"
+                               + std::to_string(m_camera->GetResolution().m_height) + " @"
+                               + std::to_string(m_camera->GetFps())                 + "fps";
         m_statusbar->SetStatusText(wxString(resolution_string), 2);
         wxLogMessage("Resolution: %s", resolution_string);
+        
+        wxLogMessage("Supported resolutions:");
+        auto resolutions = m_camera->GetSupportedResolutions();
+        for (const auto res : resolutions)
+        {
+            wxLogMessage("%ix%i", res.m_width, res.m_height);
+            m_tb_choice_resolution->Append(std::to_string(res.m_width) + "x" + std::to_string(res.m_height));
+        }
+        m_tb_choice_resolution->SetSelection(0);
     }
     else
     {
@@ -105,15 +116,19 @@ void MainFrame::DrawCameraFrame(cv::Mat& pImg)
 {
     if (pImg.empty()) return;
 
-    int img_width  = m_camera->GetWidth();
-    int img_height = m_camera->GetHeight();
-    
+    int img_width, img_height;
+    wxCriticalSectionLocker lock{ m_cs_camera };
+    {
+        img_width  = m_camera->GetResolution().m_width;
+        img_height = m_camera->GetResolution().m_height;
+    }
+
     int win_width, win_height, new_width, new_height;
     m_view_camera->GetClientSize(&win_width, &win_height);
 
-    const int new_img_width = (img_width * win_height) / img_height;
-    const int new_img_height = (img_height * win_width) / img_width;
-    const int width_diff = (win_width - new_img_width) / 2;
+    const int new_img_width  = (img_width  * win_height) / img_height;
+    const int new_img_height = (img_height * win_width)  / img_width;
+    const int width_diff  = (win_width  - new_img_width)  / 2;
     const int height_diff = (win_height - new_img_height) / 2;
 
     if (height_diff >= 0)
@@ -183,7 +198,7 @@ void MainFrame::OnCameraViewResize(wxSizeEvent& event)
 
 void MainFrame::OnClose(wxCloseEvent& event)
 {
-    if (GetThread() && GetThread()->IsRunning()) GetThread()->Wait();
+    if (GetThread() && GetThread()->IsRunning()) GetThread()->Delete();
 
     Destroy();
 }

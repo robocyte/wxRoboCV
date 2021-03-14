@@ -1,4 +1,5 @@
 #include "../include/MainFrame.h"
+#include "../include/OpenCVCamera.h"
 #include "wx/stdpaths.h"
 #include "wx/log.h"
 
@@ -59,4 +60,19 @@ void MainFrame::OnMenuClicked(wxCommandEvent& event)
 
     default: event.Skip();
     }
+}
+
+void MainFrame::OnChangeResolution(wxCommandEvent& event)
+{
+    if (GetThread() && GetThread()->IsRunning()) GetThread()->Pause();
+    wxLogMessage("Camera thread paused");
+
+    m_camera->SetResolution(event.GetSelection());
+    auto resolution_string = std::to_string(m_camera->GetResolution().m_width) + "x"
+        + std::to_string(m_camera->GetResolution().m_height) + " @"
+        + std::to_string(m_camera->GetFps()) + "fps";
+    m_statusbar->SetStatusText(wxString(resolution_string), 2);
+
+    GetThread()->Resume();
+    wxLogMessage("Camera thread resumed");
 }

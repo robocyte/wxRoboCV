@@ -69,9 +69,12 @@ wxThread::ExitCode MainFrame::Entry()
 
 
         // ...AND DRAW FRAME
-        DrawCameraFrame(new_frame);
+        {
+            wxCriticalSectionLocker lock{ m_cs_current_frame };
+            m_current_frame = new_frame;
+        }
 
-        //wxThread::Sleep(5);
+        m_view_camera->Refresh(false);
     }
 
     return wxThread::ExitCode();
@@ -123,75 +126,50 @@ void MainFrame::PauseResumeCameraThread()
     }
 }
 
-void MainFrame::DrawCameraFrame(cv::Mat& image)
-{
-    if (image.empty()) return;
-
-    int win_width, win_height, new_width, new_height;
-    m_view_camera->GetClientSize(&win_width, &win_height);
-
-    const int new_img_width  = (image.cols * win_height) / image.rows;
-    const int new_img_height = (image.rows * win_width)  / image.cols;
-    const int width_diff  = (win_width  - new_img_width)  / 2;
-    const int height_diff = (win_height - new_img_height) / 2;
-
-    if (height_diff >= 0)
-    {
-        new_width  = win_width;
-        new_height = new_img_height;
-    }
-    else
-    {
-        new_width  = new_img_width;
-        new_height = win_height;
-    }
-
-    cv::Mat dstImg;
-    cv::resize(image, dstImg, cv::Size(new_width, new_height), 0, 0, cv::INTER_AREA);
-    cv::rectangle(dstImg, cv::Point(10, 10), cv::Point(new_width - 10, new_height - 10), CV_RGB(0, 255, 0), 1);
-
-    wxImage tmpImage(new_width, new_height, dstImg.data, true);
-
-    m_image_mutex.Lock();
-    m_image = tmpImage.Copy();
-    m_image_mutex.Unlock();
-
-    m_view_camera->Refresh(false);
-}
-
 void MainFrame::OnCameraViewPaint(wxPaintEvent& event)
 {
     wxPaintDC dc(m_view_camera);
     if (!dc.IsOk()) return;
 
-    m_image_mutex.Lock();
-    if (m_image.IsOk())
+    dc.SetPen(*wxMEDIUM_GREY_PEN);
+    dc.SetBrush(*wxMEDIUM_GREY_BRUSH);
+
+    wxCriticalSectionLocker lock{ m_cs_current_frame };
+    if (!m_current_frame.empty())
     {
-        int img_width  = m_image.GetWidth();
-        int img_height = m_image.GetHeight();
-        
         int win_width, win_height;
         m_view_camera->GetClientSize(&win_width, &win_height);
 
-        const int width_diff  = (win_width - img_width) / 2;
-        const int height_diff = (win_height - img_height) / 2;
+        const int new_img_width  = (m_current_frame.cols * win_height) / m_current_frame.rows;
+        const int new_img_height = (m_current_frame.rows * win_width)  / m_current_frame.cols;
+        const int width_diff  = (win_width  - new_img_width)  / 2;
+        const int height_diff = (win_height - new_img_height) / 2;
         
-        dc.SetPen(*wxMEDIUM_GREY_PEN);
-        dc.SetBrush(*wxMEDIUM_GREY_BRUSH);
-        if (height_diff > 0)
+        if (height_diff >= 0)
         {
+            cv::Mat dstImg;
+            cv::resize(m_current_frame, dstImg, cv::Size(win_width, new_img_height), 0, 0, cv::INTER_AREA);
+            cv::rectangle(dstImg, cv::Point(10, 10), cv::Point(win_width - 10, new_img_height - 10), CV_RGB(0, 255, 0), 1);
+
+            wxImage tmpImage(win_width, new_img_height, dstImg.data, true);
+            
             dc.DrawRectangle(0, 0, win_width, height_diff);
-            dc.DrawBitmap(wxBitmap{ m_image }, 0, height_diff);
-            dc.DrawRectangle(0, img_height + height_diff, win_width, height_diff);
+            dc.DrawBitmap(wxBitmap{ tmpImage }, 0, height_diff);
+            dc.DrawRectangle(0, m_current_frame.rows + height_diff, win_width, height_diff);
         }
         else
         {
+            cv::Mat dstImg;
+            cv::resize(m_current_frame, dstImg, cv::Size(new_img_width, win_height), 0, 0, cv::INTER_AREA);
+            cv::rectangle(dstImg, cv::Point(10, 10), cv::Point(new_img_width - 10, win_height - 10), CV_RGB(0, 255, 0), 1);
+
+            wxImage tmpImage(new_img_width, win_height, dstImg.data, true);
+
             dc.DrawRectangle(0, 0, width_diff, win_height);
-            dc.DrawBitmap(wxBitmap{ m_image }, width_diff, 0);
-            dc.DrawRectangle(img_width + width_diff, 0, width_diff, win_height);
+            dc.DrawBitmap(wxBitmap{ tmpImage }, width_diff, 0);
+            dc.DrawRectangle(m_current_frame.cols + width_diff, 0, width_diff, win_height);
         }
     }
-    m_image_mutex.Unlock();
 }
 
 void MainFrame::OnCameraViewResize(wxSizeEvent& event)

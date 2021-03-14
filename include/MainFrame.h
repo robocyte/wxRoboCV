@@ -16,7 +16,6 @@ public:
 	void InitializeCamera();
 	void StartCameraThread();
 	void PauseResumeCameraThread();
-	void DrawCameraFrame(cv::Mat& image);
 
 protected:
 	void OnClose(wxCloseEvent& event);
@@ -30,7 +29,8 @@ private:
 	wxThread::ExitCode  Entry();
 
 	std::shared_ptr<OpenCVCamera> m_camera;
-	wxImage						  m_image;
-	wxMutex						  m_image_mutex;
+	cv::Mat						  m_current_frame;
+
 	wxCriticalSection			  m_cs_camera;
+	wxCriticalSection			  m_cs_current_frame;
 };

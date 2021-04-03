@@ -24,6 +24,7 @@ protected:
 	void OnChangeResolution(wxCommandEvent& event);
 	void OnCameraViewPaint(wxPaintEvent& event);
 	void OnCameraViewResize(wxSizeEvent& event);
+	void OnCameraViewKeyDown(wxKeyEvent& event);
 
 private:
 	wxThread::ExitCode  Entry();

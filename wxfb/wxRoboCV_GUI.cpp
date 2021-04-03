@@ -107,6 +107,7 @@ MainFrame_base::MainFrame_base( wxWindow* parent, wxWindowID id, const wxString&
 	this->Connect( m_tb_pause_camera->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MainFrame_base::OnToolClicked ) );
 	this->Connect( m_tb_screenshot->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MainFrame_base::OnToolClicked ) );
 	m_tb_choice_resolution->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MainFrame_base::OnChangeResolution ), NULL, this );
+	m_view_camera->Connect( wxEVT_KEY_DOWN, wxKeyEventHandler( MainFrame_base::OnCameraViewKeyDown ), NULL, this );
 	m_view_camera->Connect( wxEVT_PAINT, wxPaintEventHandler( MainFrame_base::OnCameraViewPaint ), NULL, this );
 	m_view_camera->Connect( wxEVT_SIZE, wxSizeEventHandler( MainFrame_base::OnCameraViewResize ), NULL, this );
 	this->Connect( m_tb_save_log->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MainFrame_base::OnToolClicked ) );
@@ -121,6 +122,7 @@ MainFrame_base::~MainFrame_base()
 	this->Disconnect( m_tb_pause_camera->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MainFrame_base::OnToolClicked ) );
 	this->Disconnect( m_tb_screenshot->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MainFrame_base::OnToolClicked ) );
 	m_tb_choice_resolution->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( MainFrame_base::OnChangeResolution ), NULL, this );
+	m_view_camera->Disconnect( wxEVT_KEY_DOWN, wxKeyEventHandler( MainFrame_base::OnCameraViewKeyDown ), NULL, this );
 	m_view_camera->Disconnect( wxEVT_PAINT, wxPaintEventHandler( MainFrame_base::OnCameraViewPaint ), NULL, this );
 	m_view_camera->Disconnect( wxEVT_SIZE, wxSizeEventHandler( MainFrame_base::OnCameraViewResize ), NULL, this );
 	this->Disconnect( m_tb_save_log->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MainFrame_base::OnToolClicked ) );

@@ -73,6 +73,7 @@ class MainFrame_base : public wxFrame
 		virtual void OnMenuClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnToolClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnChangeResolution( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnCameraViewKeyDown( wxKeyEvent& event ) { event.Skip(); }
 		virtual void OnCameraViewPaint( wxPaintEvent& event ) { event.Skip(); }
 		virtual void OnCameraViewResize( wxSizeEvent& event ) { event.Skip(); }
 

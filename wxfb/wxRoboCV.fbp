@@ -326,6 +326,7 @@
                 <property name="window_extra_style"></property>
                 <property name="window_name"></property>
                 <property name="window_style">wxBORDER_NONE|wxTAB_TRAVERSAL</property>
+                <event name="OnKeyDown">OnCameraViewKeyDown</event>
                 <event name="OnPaint">OnCameraViewPaint</event>
                 <event name="OnSize">OnCameraViewResize</event>
             </object>

@@ -91,3 +91,35 @@ void MainFrame::OnChangeResolution(wxCommandEvent& event)
     GetThread()->Resume();
     wxLogMessage("Camera thread resumed");
 }
+
+void MainFrame::OnCameraViewKeyDown(wxKeyEvent& event)
+{
+    wxChar uc = event.GetUnicodeKey();
+    if (uc != WXK_NONE)
+    {
+        // It's a "normal" character. Notice that this includes
+        // control characters in 1..31 range, e.g. WXK_RETURN or
+        // WXK_BACK, so check for them explicitly.
+        if (uc >= 32)
+        {
+            wxLogMessage("You pressed '%c'", uc);
+        }
+        else
+        {
+            // It's a control character
+        }
+    }
+    else // No Unicode equivalent.
+    {
+        // It's a special key, deal with all the known ones:
+        switch (event.GetKeyCode())
+        {
+        case WXK_LEFT:
+            break;
+        case WXK_RIGHT:
+            break;
+        case WXK_F1:
+            break;
+        }
+    }
+}

@@ -17,7 +17,15 @@ void MainFrame::OnToolClicked(wxCommandEvent& event)
     case ID_TB_SAVE_LOG:
     {
         const auto filename = m_path_app.string() + R"(\Log.txt)";
-        if (m_tc_log->SaveFile(filename)) wxLogMessage("Log saved to %s", filename);
+        if (m_tc_log->SaveFile(filename))
+        {
+            wxLogMessage("Log saved to %s", filename);
+        }
+        else
+        {
+            wxLogMessage("ERROR: Couldn't save %s", filename);
+        }
+
         break;
     }
 
@@ -37,7 +45,15 @@ void MainFrame::OnToolClicked(wxCommandEvent& event)
         }
 
         const auto filename = m_path_screenshots.string() + R"(\screenshot.png)";
-        if (cv::imwrite(filename, output)) wxLogMessage("Screenshot saved to %s", filename);
+        if (cv::imwrite(filename, output))
+        {
+            wxLogMessage("Screenshot saved to %s", filename);
+        }
+        else
+        {
+            wxLogMessage("ERROR: Couldn't save %s", filename);
+        }
+
         break;
     }
 

@@ -168,8 +168,6 @@ void MainFrame::InitializeGuiStyle()
 {
     m_toolbar_main->SetArtProvider(new wxAuiSolidToolBarArt{});
     m_toolbar_log->SetArtProvider(new wxAuiSolidToolBarArt{});
-    //m_toolbar_viewport->SetArtProvider(new wxAuiSolidToolBarArt{});
-    //m_tb_timeline->SetArtProvider(new wxAuiSolidToolBarArt{});
 
     m_mgr.GetArtProvider()->SetColor(wxAUI_DOCKART_BORDER_COLOUR, light_theme_main_color);
     m_mgr.GetArtProvider()->SetColor(wxAUI_DOCKART_SASH_COLOUR, light_theme_main_color);

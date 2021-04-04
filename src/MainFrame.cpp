@@ -1,5 +1,6 @@
 #include "wx/log.h"
 #include "wx/dcclient.h"
+#include "wx/stdpaths.h"
 
 #include "opencv2/imgproc.hpp"
 
@@ -7,6 +8,7 @@
 #include "../include/OpenCVCamera.h"
 
 #include <string>
+#include <filesystem>
 
 MainFrame::MainFrame(wxWindow* parent)
     : MainFrame_base(parent)
@@ -22,6 +24,23 @@ void MainFrame::InitializeLog()
 
     const auto font = new wxFont{ 9, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, "consolas" };
     m_tc_log->SetFont(*font);
+}
+
+void MainFrame::InitializeDirectoryStructure()
+{
+    wxFileName f(wxStandardPaths::Get().GetExecutablePath());
+    m_path_app = fs::path{ f.GetPath().ToStdString() };
+    m_path_screenshots = m_path_app / "screenshots";
+
+    if (fs::exists(m_path_screenshots))
+    {
+        wxLogMessage("Found screenshot dir: %s", m_path_screenshots.string());
+    }
+    else
+    {
+        fs::create_directory(m_path_screenshots);
+        wxLogMessage("Created screenshot dir: %s", m_path_screenshots.string());
+    }
 }
 
 void MainFrame::StartCameraThread()

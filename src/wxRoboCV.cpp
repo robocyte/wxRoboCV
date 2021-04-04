@@ -11,6 +11,7 @@ bool MyApp::OnInit()
     auto frame = new MainFrame{};
     
     frame->InitializeLog();
+    frame->InitializeDirectoryStructure();
     frame->SetIcon(wxICON(aaaamain));
     frame->InitializeGuiStyle();
     frame->Show();

@@ -3,6 +3,10 @@
 #include "../wxfb/wxRoboCV_GUI.h"
 #include "opencv2/opencv.hpp"
 
+#include <filesystem>
+
+namespace fs = std::filesystem;
+
 class OpenCVCamera;
 
 class MainFrame : public MainFrame_base, public wxThreadHelper
@@ -12,6 +16,7 @@ public:
 	~MainFrame();
 
 	void InitializeLog();
+	void InitializeDirectoryStructure();
 	void InitializeGuiStyle();
 	void InitializeCamera();
 	void StartCameraThread();
@@ -34,4 +39,7 @@ private:
 
 	wxCriticalSection			  m_cs_camera;
 	wxCriticalSection			  m_cs_current_frame;
+
+	fs::path					  m_path_app;
+	fs::path					  m_path_screenshots;
 };

@@ -16,10 +16,8 @@ void MainFrame::OnToolClicked(wxCommandEvent& event)
 
     case ID_TB_SAVE_LOG:
     {
-        wxFileName f(wxStandardPaths::Get().GetExecutablePath());
-        wxString appPath(f.GetPath());
-        const auto target = appPath + R"(\Log.txt)";
-        if (m_tc_log->SaveFile(target)) wxLogMessage("Log saved to %s", target);
+        const auto filename = m_path_app.string() + R"(\Log.txt)";
+        if (m_tc_log->SaveFile(filename)) wxLogMessage("Log saved to %s", filename);
         break;
     }
 
@@ -38,7 +36,9 @@ void MainFrame::OnToolClicked(wxCommandEvent& event)
             cv::cvtColor(m_current_frame, output, cv::COLOR_BGR2RGB);
         }
 
-        cv::imwrite("screenshot.png", output);
+        const auto filename = m_path_screenshots.string() + R"(\screenshot.png)";
+        if (cv::imwrite(filename, output)) wxLogMessage("Screenshot saved to %s", filename);
+        break;
     }
 
     default: event.Skip();

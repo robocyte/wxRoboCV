@@ -7,6 +7,8 @@
 
 namespace fs = std::filesystem;
 
+extern const wxEventTypeTag<wxThreadEvent> wxEVT_CAMERA_THREAD_UPDATE;
+
 class OpenCVCamera;
 
 class MainFrame : public MainFrame_base, public wxThreadHelper
@@ -30,6 +32,7 @@ protected:
 	void OnCameraViewPaint(wxPaintEvent& event);
 	void OnCameraViewResize(wxSizeEvent& event);
 	void OnCameraViewKeyDown(wxKeyEvent& event);
+    void OnCameraThreadUpdate(wxThreadEvent& event);
 
 private:
 	wxThread::ExitCode  Entry();

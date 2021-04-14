@@ -10,9 +10,12 @@
 #include <string>
 #include <filesystem>
 
+const wxEventTypeTag<wxThreadEvent> wxEVT_CAMERA_THREAD_UPDATE{ wxNewEventType() };
+
 MainFrame::MainFrame(wxWindow* parent)
     : MainFrame_base(parent)
 {
+    this->Bind(wxEVT_CAMERA_THREAD_UPDATE, &MainFrame::OnCameraThreadUpdate, this);
 }
 
 void MainFrame::InitializeLog()
@@ -93,7 +96,7 @@ wxThread::ExitCode MainFrame::Entry()
             m_current_frame = new_frame;
         }
 
-        m_view_camera->Refresh(false);
+        wxQueueEvent(this, new wxThreadEvent{ wxEVT_CAMERA_THREAD_UPDATE });
     }
 
     return wxThread::ExitCode();
@@ -127,6 +130,11 @@ void MainFrame::InitializeCamera()
         wxLogMessage("Camera not initialized");
         return;
     }
+}
+
+void MainFrame::OnCameraThreadUpdate(wxThreadEvent& event)
+{
+    m_view_camera->Refresh(false);
 }
 
 void MainFrame::PauseResumeCameraThread()
@@ -207,4 +215,5 @@ void MainFrame::OnClose(wxCloseEvent& event)
 
 MainFrame::~MainFrame()
 {
+    this->Unbind(wxEVT_CAMERA_THREAD_UPDATE, &MainFrame::OnCameraThreadUpdate, this);
 }

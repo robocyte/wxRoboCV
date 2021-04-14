@@ -175,7 +175,7 @@ void MainFrame::OnCameraViewPaint(wxPaintEvent& event)
             
             dc.DrawRectangle(0, 0, win_width, height_diff);
             dc.DrawBitmap(wxBitmap{ tmp_img }, 0, height_diff);
-            dc.DrawRectangle(0, m_current_frame.rows + height_diff, win_width, height_diff);
+            dc.DrawRectangle(0, new_img_height + height_diff, win_width, height_diff);
         }
         else
         {
@@ -187,7 +187,7 @@ void MainFrame::OnCameraViewPaint(wxPaintEvent& event)
 
             dc.DrawRectangle(0, 0, width_diff, win_height);
             dc.DrawBitmap(wxBitmap{ tmp_img }, width_diff, 0);
-            dc.DrawRectangle(m_current_frame.cols + width_diff, 0, width_diff, win_height);
+            dc.DrawRectangle(new_img_width + width_diff, 0, width_diff, win_height);
         }
     }
 }

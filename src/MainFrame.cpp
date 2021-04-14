@@ -131,16 +131,17 @@ void MainFrame::InitializeCamera()
 
 void MainFrame::PauseResumeCameraThread()
 {
-    if (!GetThread()) return;
+    auto thread = GetThread();
+    if (!thread) return;
 
-    if (GetThread()->IsRunning())
+    if (thread->IsRunning())
     {
-        GetThread()->Pause();
+        thread->Pause();
         wxLogMessage("Camera thread paused");
     }
-    else if (GetThread()->IsPaused())
+    else if (thread->IsPaused())
     {
-        GetThread()->Resume();
+        thread->Resume();
         wxLogMessage("Camera thread resumed");
     }
 }

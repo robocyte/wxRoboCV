@@ -1,13 +1,6 @@
 // Main application icon
 aaaamain            ICON    "opencv.ico"
 
-// Menu/toolbar icons
-image_browser_icon  ICON    "image.ico"
-image_preview_icon  ICON    "image_search.ico"
-properties_icon     ICON    "properties.ico"
-log_icon            ICON    "log.ico"
-camera_icon         ICON    "camera.ico"
-
 // Button icons
 save_icon           ICON    "save.ico"
 clear_log_icon      ICON    "log_clear.ico"
